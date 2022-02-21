@@ -12,7 +12,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mainBinding = DataBindingUtil.setContentView(this,R.layout.activity_main)
+      //  mainBinding = DataBindingUtil.setContentView(this,R.layout.activity_main)
 
+        mainBinding = ActivityMainBinding.inflate(layoutInflater)
+
+        setContentView(mainBinding.root)
     }
 }
