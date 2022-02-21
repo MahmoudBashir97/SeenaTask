@@ -9,15 +9,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.mahmoudbashir.seenatask.R
 import com.mahmoudbashir.seenatask.pojo.results
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.single_item_layout.view.*
 
-class PopularAdapter: RecyclerView.Adapter<PopularAdapter.ViewHolder>() {
+class PopularAdapter(val onClickI:ItemClickInterface): RecyclerView.Adapter<PopularAdapter.ViewHolder>() {
 
 
      class ViewHolder(item: View) : RecyclerView.ViewHolder(item) {
-        val title: TextView = item.findViewById<TextView>(R.id.title)
-        val byLine: TextView = item.findViewById<TextView>(R.id.txt_published_by)
-        val publishedDate: TextView = item.findViewById<TextView>(R.id.txt_published_date)
+
     }
 
     private val differCallback = object : DiffUtil.ItemCallback<results>(){
@@ -45,8 +44,25 @@ class PopularAdapter: RecyclerView.Adapter<PopularAdapter.ViewHolder>() {
             txt_title.text = result.title
             txt_published_by.text = result.source
             txt_published_date.text = result.published_date
+
+            val imgUrl = if (differ.currentList[position].media.isNotEmpty()){
+                differ.currentList[position].media[0].media_metadata[0].url
+            }else{
+                "R.drawable.ic_launcher_background"
+            }
+
+            Picasso.get().load(imgUrl).into(img_news)
+
+            setOnClickListener {
+                onClickI.onClick(position,imgUrl,result.title,result.abstract)
+            }
         }
     }
 
     override fun getItemCount(): Int = differ.currentList.size
+
+
+    interface ItemClickInterface {
+        fun onClick(position:Int,imgUrl:String,title:String,article_abstract:String)
+    }
 }

@@ -5,12 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.mahmoudbashir.seenatask.R
 import com.mahmoudbashir.seenatask.adapters.PopularAdapter
 import com.mahmoudbashir.seenatask.databinding.FragmentHomeBinding
+import com.mahmoudbashir.seenatask.ui.activities.MainActivity
 import com.mahmoudbashir.seenatask.viewModel.HomeViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -18,15 +20,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment() , PopularAdapter.ItemClickInterface{
     lateinit var homeBinding: FragmentHomeBinding
     lateinit var pop_adapter:PopularAdapter
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    private val viewModel: HomeViewModel by viewModels {
-        viewModelFactory
-    }
+    lateinit var viewModel:HomeViewModel
 
 
     override fun onCreateView(
@@ -36,6 +34,7 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
        homeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
+        viewModel = (activity as MainActivity).viewModel
 
         return homeBinding.root
     }
@@ -46,17 +45,17 @@ class HomeFragment : Fragment() {
         setUpRecyclerView()
         getDataToViews()
 
-
     }
 
     private fun getDataToViews() {
-        GlobalScope.launch(Dispatchers.IO){
+        homeBinding.isLoading = true
+
             viewModel.getPopular()
-        }
 
         viewModel.pop.observe(viewLifecycleOwner,{
             model ->
             if (model != null){
+                homeBinding.isLoading = false
                 pop_adapter.differ.submitList(model.results)
             }
         })
@@ -64,10 +63,14 @@ class HomeFragment : Fragment() {
     }
 
     private fun setUpRecyclerView() {
-        pop_adapter = PopularAdapter()
+        pop_adapter = PopularAdapter(this)
         homeBinding.recNews.apply {
             setHasFixedSize(true)
             adapter = pop_adapter
         }
+    }
+
+    override fun onClick(position: Int, imgUrl: String, title: String, article_abstract: String) {
+        Toast.makeText(context, "clicked : $position",Toast.LENGTH_LONG).show()
     }
 }
