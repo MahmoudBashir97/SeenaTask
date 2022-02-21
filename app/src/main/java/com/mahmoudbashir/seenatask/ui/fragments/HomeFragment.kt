@@ -6,12 +6,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.mahmoudbashir.seenatask.R
 import com.mahmoudbashir.seenatask.databinding.FragmentHomeBinding
+import com.mahmoudbashir.seenatask.viewModel.HomeViewModel
+import javax.inject.Inject
 
 
 class HomeFragment : Fragment() {
     lateinit var homeBinding: FragmentHomeBinding
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private val viewModel: HomeViewModel by viewModels {
+        viewModelFactory
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
