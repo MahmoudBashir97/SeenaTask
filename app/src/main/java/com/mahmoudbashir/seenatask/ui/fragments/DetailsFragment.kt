@@ -18,9 +18,6 @@ class DetailsFragment : Fragment() {
     var img_url:String? = null
     var articleAbstract:String? = null
 
-    lateinit var scalGest : ScaleGestureDetector
-    private var mScaleFactor = 1.0f
-
     val args:DetailsFragmentArgs by navArgs()
 
     override fun onCreateView(
@@ -45,22 +42,7 @@ class DetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setUpViews()
-       /* detailsBinding.imgUrl.setOnTouchListener(object :View.OnTouchListener{
-            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                scalGest.onTouchEvent(event)
-                return true
-            }
-        })
 
-        scalGest = ScaleGestureDetector(context,object : ScaleGestureDetector.SimpleOnScaleGestureListener(){
-            override fun onScale(detector: ScaleGestureDetector?): Boolean {
-                mScaleFactor *= scalGest.scaleFactor
-                mScaleFactor = 0.1f.coerceAtLeast(mScaleFactor.coerceAtMost(10.0f))
-                detailsBinding.imgUrl.scaleX = mScaleFactor
-                detailsBinding.imgUrl.scaleY = mScaleFactor
-                return true
-            }
-        })*/
     }
 
     private fun setUpViews() {
