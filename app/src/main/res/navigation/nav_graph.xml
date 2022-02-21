@@ -22,5 +22,19 @@
         android:id="@+id/detailsFragment"
         android:name="com.mahmoudbashir.seenatask.ui.fragments.DetailsFragment"
         android:label="fragment_details"
-        tools:layout="@layout/fragment_details" />
+        tools:layout="@layout/fragment_details">
+
+        <argument android:name="ImgUrl"
+            app:argType="string"
+            app:nullable="false"/>
+
+        <argument android:name="title"
+            app:argType="string"
+            app:nullable="false"/>
+
+        <argument android:name="article_abstract"
+            app:argType="string"
+            app:nullable="false"/>
+
+    </fragment>
 </navigation>
