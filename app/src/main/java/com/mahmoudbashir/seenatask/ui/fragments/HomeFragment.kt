@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.mahmoudbashir.seenatask.R
 import com.mahmoudbashir.seenatask.adapters.PopularAdapter
 import com.mahmoudbashir.seenatask.databinding.FragmentHomeBinding
@@ -71,6 +72,6 @@ class HomeFragment : Fragment() , PopularAdapter.ItemClickInterface{
     }
 
     override fun onClick(position: Int, imgUrl: String, title: String, article_abstract: String) {
-        Toast.makeText(context, "clicked : $position",Toast.LENGTH_LONG).show()
+        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetailsFragment(imgUrl,title,article_abstract))
     }
 }

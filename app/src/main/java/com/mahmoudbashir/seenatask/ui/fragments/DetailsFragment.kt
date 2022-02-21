@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.navArgs
 import com.mahmoudbashir.seenatask.R
 import com.mahmoudbashir.seenatask.databinding.FragmentDetailsBinding
 import com.squareup.picasso.Picasso
@@ -18,16 +19,20 @@ class DetailsFragment : Fragment() {
     var img_url:String? = null
     var articleAbstract:String? = null
 
+    val args:DetailsFragmentArgs by navArgs()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         detailsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
+
+
        // here we are getting passed data(Arguments data) from homeFragment in NavArgs
-        title = arguments?.let { DetailsFragmentArgs.fromBundle(it).title }
-        img_url = arguments?.let { DetailsFragmentArgs.fromBundle(it).imgUrl }
-        articleAbstract = arguments?.let { DetailsFragmentArgs.fromBundle(it).articleAbstract }
+        title = args.title
+        img_url = args.imgURL
+        articleAbstract = args.articleAbstract
 
 
 
@@ -38,7 +43,6 @@ class DetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setUpViews()
-
     }
 
     private fun setUpViews() {

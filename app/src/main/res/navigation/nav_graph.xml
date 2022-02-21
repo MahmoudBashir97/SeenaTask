@@ -24,7 +24,7 @@
         android:label="fragment_details"
         tools:layout="@layout/fragment_details">
 
-        <argument android:name="ImgUrl"
+        <argument android:name="imgURL"
             app:argType="string"
             app:nullable="false"/>
 
