@@ -1,11 +1,10 @@
 package com.mahmoudbashir.seenatask.ui.fragments
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.mahmoudbashir.seenatask.R
 import com.mahmoudbashir.seenatask.databinding.FragmentDetailsBinding
@@ -18,6 +17,9 @@ class DetailsFragment : Fragment() {
     var title:String? = null
     var img_url:String? = null
     var articleAbstract:String? = null
+
+    lateinit var scalGest : ScaleGestureDetector
+    private var mScaleFactor = 1.0f
 
     val args:DetailsFragmentArgs by navArgs()
 
@@ -43,6 +45,22 @@ class DetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setUpViews()
+       /* detailsBinding.imgUrl.setOnTouchListener(object :View.OnTouchListener{
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                scalGest.onTouchEvent(event)
+                return true
+            }
+        })
+
+        scalGest = ScaleGestureDetector(context,object : ScaleGestureDetector.SimpleOnScaleGestureListener(){
+            override fun onScale(detector: ScaleGestureDetector?): Boolean {
+                mScaleFactor *= scalGest.scaleFactor
+                mScaleFactor = 0.1f.coerceAtLeast(mScaleFactor.coerceAtMost(10.0f))
+                detailsBinding.imgUrl.scaleX = mScaleFactor
+                detailsBinding.imgUrl.scaleY = mScaleFactor
+                return true
+            }
+        })*/
     }
 
     private fun setUpViews() {
@@ -50,6 +68,10 @@ class DetailsFragment : Fragment() {
             txtTitle.text=title
             txtArticleAbstract.text=articleAbstract
             Picasso.get().load(img_url).placeholder(R.drawable.ic_launcher_background).into(imgUrl)
+
+            imgUrl.setOnClickListener {
+                findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToFullScreenFragment(img_url!!))
+            }
         }
 
     }

@@ -35,6 +35,19 @@
         <argument android:name="article_abstract"
             app:argType="string"
             app:nullable="false"/>
+        <action
+            android:id="@+id/action_detailsFragment_to_fullScreenFragment"
+            app:destination="@id/fullScreenFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/fullScreenFragment"
+        android:name="com.mahmoudbashir.seenatask.FullScreenFragment"
+        android:label="fragment_full_screen"
+        tools:layout="@layout/fragment_full_screen">
+        <argument android:name="imgURL"
+            app:argType="string"
+            app:nullable="false"/>
 
     </fragment>
 </navigation>
